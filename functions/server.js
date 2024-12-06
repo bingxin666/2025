@@ -1,5 +1,5 @@
 // functions/next-lunar-new-year.js
-import { lunar2solar } from 'https://cdn.jsdelivr.net/npm/solarlunar/lib/solarlunar.min.js';
+import { lunar2solar } from 'solarlunar';
 
 function getLunarNewYearDate(year) {
     const solarDate = lunar2solar(year, 1, 1);
