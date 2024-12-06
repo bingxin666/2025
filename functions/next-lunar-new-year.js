@@ -1,5 +1,5 @@
 // functions/next-lunar-new-year.js
-import { lunar2solar } from 'https://cdn.jsdelivr.net/npm/solarlunar/lib/solarlunar.min.js';
+const { lunar2solar } = require('solarlunar');
 
 function getLunarNewYearDate(year) {
     const solarDate = lunar2solar(year, 1, 1);
@@ -8,7 +8,7 @@ function getLunarNewYearDate(year) {
 
 function getNextLunarNewYear(currentDate) {
     const currentYear = currentDate.getFullYear();
-    for (let year = currentYear; year <= 2030; year++) {
+    for (let year = currentYear; year <= 2100; year++) {
         const lunarNewYearDate = new Date(getLunarNewYearDate(year));
         if (lunarNewYearDate > currentDate) {
             return getLunarNewYearDate(year);
@@ -17,7 +17,7 @@ function getNextLunarNewYear(currentDate) {
     return '日期超出范围';
 }
 
-export async function onRequest(context) {
+module.exports = async function onRequest(context) {
     const { request } = context;
     const url = new URL(request.url);
     const date = url.searchParams.get('date');
@@ -34,4 +34,4 @@ export async function onRequest(context) {
     return new Response(JSON.stringify({ nextLunarNewYear }), {
         headers: { 'Content-Type': 'application/json' },
     });
-}
+};
